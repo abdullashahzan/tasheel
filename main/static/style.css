@@ -1,0 +1,18 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.road {
+    transition: all 1s ease;
+}
+
+.animatedsvg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.yellow {
+    color: #ffd230;
+}
