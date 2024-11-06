@@ -1,0 +1,65 @@
+{% extends 'main/layout.html' %}
+
+{% block body %}
+{% if webuser.status == "Admin" %}
+<div class="container-fluid pt-4">
+    <div class="row" style="min-height: 120vh;">
+        <div class="col-md-9 px-5">
+            <h2 class="yellow">Live map (Tasheel)</h2>
+            <p class="text-light">We have used extremely zoomed in part of the map consisting of a single road for this prototype. The color of the road changes depending upon the crowd density shown in live footage from ESP32 module.</p>
+            <div class="map-container" style="display: flex; justify-content: center; align-items: start; height: 50vh;">
+                <div class="block" style="width: 40%; height: 100%; background-color: #495057; border-top-left-radius: 2rem; border-bottom-left-radius: 2rem;"></div>
+                <div class="road d-flex justify-content-center align-items-center" id="road" style="width: 20%; height: 100%; background-color: #0d6efd;">
+                    {% if road.direction == 0 %}
+                    <i class="bi bi-caret-up-square-fill" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% elif road.direction == 1 %}
+                    <i class="bi bi-caret-down-square-fill" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% elif road.direction == 2 %}
+                    <i class="bi bi-arrows-expand" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% elif road.direction == 3 %}
+                    <i class="bi bi-file-excel" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% endif %}
+                </div>
+                <div class="block" style="width: 40%; height: 100%; background-color: #495057; border-top-right-radius: 2rem; border-bottom-right-radius: 2rem;"></div>
+            </div>
+            <p class="pt-2 text-light">Crowd density on this road: <strong id="density">Heavy</strong></p>
+            <a href="{% url 'main:modify_road' 'switch' %}" class="btn btn-outline-light">Switch direction</a>
+            <a href="{% url 'main:modify_road' 'double' %}" class="btn btn-outline-light">Make road 2-way</a>
+            <a href="{% url 'main:modify_road' 'stop' %}" class="btn btn-danger">Close road</a>
+            <a href="{% url 'main:change_camera' %}" class="btn btn-primary">Change camera</a>
+        </div>
+        <div class="col-md-3">
+            <h2 class="yellow">ESP32 live feed</h2>
+            <p class="text-light">Live sample videos from ESP32 module.</p>
+            <br>
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="{% url 'main:video_feed' %}" width="220" height="auto" alt="Video Stream">
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container-fluid pt-5" style="min-height: 80vh;">
+    <div class="row" style="min-height: 80vh;">
+        <div class="col-12 text-center px-5">
+            <div class="map-container" style="display: flex; justify-content: center; align-items: start; height: 100%;">
+                <div class="block" style="width: 40%; height: 80%; background-color: #212529; margin: 10px;"></div>
+                <div class="road d-flex justify-content-center align-items-center" id="road" style="width: 20%; height: 80%; background-color: #0d6efd; margin: 10px;">
+                    {% if road.direction == 0 %}
+                    <i class="bi bi-caret-up-square-fill" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% elif road.direction == 1 %}
+                    <i class="bi bi-caret-down-square-fill" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% elif road.direction == 2 %}
+                    <i class="bi bi-arrows-expand" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% elif road.direction == 3 %}
+                    <i class="bi bi-file-excel" style="color: white; font-size: 5rem; display: block; margin: auto;"></i>
+                    {% endif %}
+                </div>
+                <div class="block" style="width: 40%; height: 80%; background-color: #212529; margin: 10px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
